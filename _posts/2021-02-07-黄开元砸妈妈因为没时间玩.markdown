@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "小栏杆今天砸了他妈!"
+title:  "黄开元砸妈妈因为没时间玩"
 date:   2021-02-07 19:47:24 +0800
 categories: jekyll update
 ---
