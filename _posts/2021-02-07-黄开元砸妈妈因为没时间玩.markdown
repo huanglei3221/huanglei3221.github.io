@@ -1,6 +1,8 @@
 ---
 layout: post
 title:  "小栏杆今天砸了他妈!"
+date:   2021-02-07 19:47:24 +0800
+categories: jekyll update
 ---
 
 # 小栏杆今天砸了妈妈。 
