@@ -21,7 +21,7 @@
 
 lsi: false
 safe: true
-source: [/_posts]
+source: [/posts]
 incremental: false
 highlighter: rouge
 gist:
