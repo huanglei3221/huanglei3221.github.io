@@ -41,6 +41,4 @@ categories: jekyll update
 
 于是他想找一个机会， 更好的向妈妈诉说一下。 
 
-
-
-![开元砸妈妈](D:\github_blog\huanglei3221.github.io\_posts\开元砸妈妈.bmp)
+![image](./assets/images/ken-beat-mother.bmp)
