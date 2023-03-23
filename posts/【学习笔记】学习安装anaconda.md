@@ -96,5 +96,31 @@ conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvi
 
 
 
+6) 安装pycharm
+
+   安装专业版，就用程序员徐师兄提供的办法即可。
+
+   参见：https://blog.junxu666.top/p/7624.html
+
+   
+
+7) 配置pycharm
+
+![image-20230323104646717](assets/images/学习安装anaconda/image-20230323104646717.png)
+
+
+
+配置完成之后，我们就可以写代码执行了， 效果如下，这和在python命令行下的效果是一样的
+
+![image-20230323110430078](assets/images/【学习笔记】学习安装anaconda/image-20230323110430078.png)
+
+
+
+
+
+8) 给下载项目配置虚拟环境
+
+![image-20230323110327431](assets/images/【学习笔记】学习安装anaconda/image-20230323110327431.png)
+
 
 
