@@ -74,15 +74,11 @@ git config --global http.proxy http://127.0.0.1:3128
 
    如果安装的时候报找不到版本， 那可能就是当前的几个源都没有相应版本，比如gradio，各个镜像源都只有3.22版本没有3.23版本
 
-   ![AI 绘画工具stable-diffusion安装教程](assets/images/用anaconda配置diffusion环境/6421a5e54abdf7711.png_e1080.jpg)
-
-   
-
    解决的方法是增加上 https://pypi.org/simple 源。 一下pip.ini内容供参考：
 
    | [global]<br/>index-url = https://pypi.douban.com/simple<br/>extra-index-url = https://pypi.tuna.tsinghua.edu.cn/simple<br/>                = https://mirrors.aliyun.com/pypi/simple<br/>                = ***https://pypi.org/simple***<br/>trusted-host = https://pypi.douban.com |
    | ------------------------------------------------------------ |
-
+   
 8) 如果遇到下载不下来的问题， 建议多更换pip源尝试
 
 ![image-20230328220509076](assets/images/用anaconda配置diffusion环境/image-20230328220509076.png)
