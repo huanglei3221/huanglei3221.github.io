@@ -1,4 +1,17 @@
-UDA和
+---
+layout: post
+title:  "【学习笔记】Postgresql内核的学习"
+date:   2023-03-30 10:12:24 +0800
+tags: thinking
+categories: 设计
+
+---
+
+#  【学习笔记】Postgresql内核的学习
+
+
+
+Postgresql内核的总结和学习
 
 
 

@@ -1,13 +1,12 @@
 ---
 layout: post
-title:  "玩chatgpt"
+title:  "【学习笔记】chatgpt真的会写故事吗"
 date:   2023-03-30 10:12:24 +0800
 tags: thinking
 categories: 设计
-
 ---
 
-#  chatgpt真的会写故事吗
+#  【学习笔记】chatgpt真的会写故事吗
 
 
 

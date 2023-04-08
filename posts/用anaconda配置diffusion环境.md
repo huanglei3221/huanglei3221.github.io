@@ -1,12 +1,12 @@
 ---
 layout: post
-title:  "用anaconda配置diffusion环境"
+title:  "【学习笔记】用anaconda配置diffusion环境"
 date:   2023-03-15 11:25:24 +0800
 tags: thinking
-categories:  日常
+categories:  技术
 ---
 
-#  用anaconda配置diffusion环境
+#  【学习笔记】用anaconda配置diffusion环境
 
 最近迷上了 Stable Diffusion web UI。
 
