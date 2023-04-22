@@ -22,15 +22,15 @@ https://www.bilibili.com/video/BV1S5411X7FY?p=21&vd_source=1115a1b57e46edddf88be
 
 
 
-1) 安装anaconda
+# 1安装anaconda
 
-   很简单， 就不赘述了，直接从官网下载安装即可。安装完成之后，可以创建一个环境，我创建的就叫hl1:
+很简单， 就不赘述了，直接从官网下载安装即可。安装完成之后，可以创建一个环境，我创建的就叫hl1:
 
 ![image-20230322234457149](assets/images/学习安装anaconda/image-20230322234457149.png)
 
 
 
-2) 创建虚拟环境
+# 2创建虚拟环境
 
 conda env list
 
@@ -40,7 +40,7 @@ conda active hl1
 
 
 
-3) 选择cuda版本：
+# 3选择cuda版本：
 
 也就是说要选择一个适合自己算力的cuda版本 
 
@@ -62,7 +62,7 @@ conda active hl1
 
 
 
-4) 执行安装
+# 4执行安装
 
 安装pytouch的命令行参数： 参见官网， 选择cuda的版本
 
@@ -84,7 +84,7 @@ conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvi
 
 
 
-5) 安装后验证
+# 5安装后验证
 
 ![image-20230323095533579](assets/images/学习安装anaconda/image-20230323095533579.png)
 
@@ -92,15 +92,15 @@ conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvi
 
 
 
-6) 安装pycharm
+# 6安装pycharm
 
-   安装专业版，就用程序员徐师兄提供的办法即可。
+安装专业版，就用程序员徐师兄提供的办法即可。
 
-   参见：https://blog.junxu666.top/p/7624.html
+参见：https://blog.junxu666.top/p/7624.html
 
-   
 
-7) 配置pycharm
+
+# 7配置pycharm
 
 ![image-20230323104646717](assets/images/学习安装anaconda/image-20230323104646717.png)
 
@@ -114,9 +114,17 @@ conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvi
 
 
 
-8) 给下载项目配置虚拟环境
+# 8给下载项目配置虚拟环境
 
 ![image-20230323110327431](assets/images/【学习笔记】学习安装anaconda/image-20230323110327431.png)
+
+
+
+# 9怎么给pip配置proxy
+
+
+
+
 
 
 

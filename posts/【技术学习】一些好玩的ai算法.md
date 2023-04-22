@@ -1,12 +1,12 @@
 ---
 layout: post
-title:  "【学习笔记】一些好玩的AI算法"
+title:  "【技术学习】一些好玩的AI算法"
 date:   2023-03-13 15:07:24 +0800
 tags: thinking
 categories: 技术
 ---
 
-#  【学习笔记】好玩的AI算法
+#  【技术学习好玩的AI算法
 
 好玩的ai算法： 
 
