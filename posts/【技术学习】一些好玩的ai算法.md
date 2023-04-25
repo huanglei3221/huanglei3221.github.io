@@ -6,7 +6,7 @@ tags: thinking
 categories: 技术
 ---
 
-#  【技术学习好玩的AI算法
+#  【技术学习】好玩的AI算法
 
 好玩的ai算法： 
 
