@@ -22,7 +22,7 @@ shared nothing 架构
 
 
 
-![image-20230422134451890](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422134451890.png)
+![image-20230422134451890](assets/images/【技术学习】greenplum和分布式/image-20230422134451890.png)
 
 
 
@@ -30,7 +30,7 @@ shared nothing 架构
 
 ## Shared Disk架构
 
-![image-20230422202453609](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422202453609.png)
+![image-20230422202453609](assets/images/【技术学习】greenplum和分布式/image-20230422202453609.png)
 
 
 
@@ -44,13 +44,13 @@ shared nothing 架构
 
 https://www.youtube.com/watch?v=rlfdS34Y9fw
 
-![image-20230422142005223](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422142005223.png)
+![image-20230422142005223](assets/images/【技术学习】greenplum和分布式/image-20230422142005223.png)
 
 
 
 举例：TeraData
 
-![image-20230422202347833](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422202347833.png)
+![image-20230422202347833](assets/images/【技术学习】greenplum和分布式/image-20230422202347833.png)
 
 各自算各自的， 算完再开会
 
@@ -104,17 +104,17 @@ https://www.youtube.com/watch?v=d9_gvEKy1MA
 
 基本上是这么个架构。
 
-![image-20230422231225214](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422231225214.png)
+![image-20230422231225214](assets/images/【技术学习】greenplum和分布式/image-20230422231225214.png)
 
 
 
 可以直观的看到部署图：
 
-![image-20230422230846250](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422230846250.png)
+![image-20230422230846250](assets/images/【技术学习】greenplum和分布式/image-20230422230846250.png)
 
 
 
-![image-20230422231334011](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422231334011.png)
+![image-20230422231334011](assets/images/【技术学习】greenplum和分布式/image-20230422231334011.png)
 
 
 
@@ -122,7 +122,7 @@ https://www.youtube.com/watch?v=d9_gvEKy1MA
 
 主备模式：
 
-![image-20230422231625897](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422231625897.png)
+![image-20230422231625897](assets/images/【技术学习】greenplum和分布式/image-20230422231625897.png)
 
 主备模式下， 读是到从节点， 写是写到主节点去。
 
@@ -130,11 +130,11 @@ https://www.youtube.com/watch?v=d9_gvEKy1MA
 
 ### 通过proxy来做读写分离，对上层屏蔽
 
-![image-20230422231727922](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422231727922.png)
+![image-20230422231727922](assets/images/【技术学习】greenplum和分布式/image-20230422231727922.png)
 
 
 
-![image-20230422232107852](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422232107852.png)
+![image-20230422232107852](assets/images/【技术学习】greenplum和分布式/image-20230422232107852.png)
 
 
 
@@ -152,11 +152,11 @@ postgresql的shared nothing 分区
 
 代理节点和节点支持无缝扩展
 
-![image-20230422214123528](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422214123528.png)
+![image-20230422214123528](assets/images/【技术学习】greenplum和分布式/image-20230422214123528.png)
 
 
 
-![image-20230422214418159](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422214418159.png)
+![image-20230422214418159](assets/images/【技术学习】greenplum和分布式/image-20230422214418159.png)
 
 PlProxy做了一层抽象， 查询数据的时候， 调用PLProxy 写的函数
 
@@ -170,21 +170,27 @@ CLUSTER模式1： 配置存在SQL/MED配置的集群信息， 通过libpq_async 
 
 CLUSTER模式2： 和CLUSTER1的区别在于： 配置信息存在专门配置表。
 
-![image-20230422215146207](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422215146207.png)
+![image-20230422215146207](assets/images/【技术学习】greenplum和分布式/image-20230422215146207.png)
 
 ## 关于连接池
 
 1） plproxy 到数据节点为长连接， plproxy和数据节点之间一般可以不用连接池
 
-![image-20230422215402242](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422215402242.png)
+![image-20230422215402242](assets/images/【技术学习】greenplum和分布式/image-20230422215402242.png)
 
 
 
 2） 应用和proxy之间建议搞连接池
 
+R_EXACT
 
+R_ALL
 
-![image-20230422225105717](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422225105717.png)
+R_ANY
+
+R_HASH
+
+![image-20230422225105717](assets/images/【技术学习】greenplum和分布式/image-20230422225105717.png)
 
 
 
@@ -196,53 +202,57 @@ https://www.bilibili.com/video/BV127411G7PX?p=17&vd_source=1115a1b57e46edddf88be
 
 ## postgresql怎么做分片运算
 
-![image-20230423003352537](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423003352537.png)
 
-![image-20230423003335510](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423003335510.png)
+
+![image-20230423003352537](assets/images/【技术学习】greenplum和分布式/image-20230423003352537.png)
+
+![image-20230423003335510](assets/images/【技术学习】greenplum和分布式/image-20230423003335510.png)
 
 ### 分片
 
 #### Hash分片：
 
-![image-20230423003628722](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423003628722.png)
+![image-20230423003628722](assets/images/【技术学习】greenplum和分布式/image-20230423003628722.png)
 
 
 
-![image-20230423003648091](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423003648091.png)
+![image-20230423003648091](assets/images/【技术学习】greenplum和分布式/image-20230423003648091.png)
 
 
 
 #### 范围分片
 
-![image-20230423003942140](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423003942140.png)
+![image-20230423003942140](assets/images/【技术学习】greenplum和分布式/image-20230423003942140.png)
 
-![image-20230423004005317](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423004005317.png)
+![image-20230423004005317](assets/images/【技术学习】greenplum和分布式/image-20230423004005317.png)
 
 
 
 ### Join的计算方式： 
 
-一种是  "broadcast join"
+#### broadcast join
 
 当一张表比较小， 就可以广播
 
-![image-20230423010142685](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423010142685.png)
+![image-20230423010142685](assets/images/【技术学习】greenplum和分布式/image-20230423010142685.png)
 
-一种是 merge join 
+#### merge join 
 
-![image-20230423004829848](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423004829848.png)
+![image-20230423004829848](assets/images/【技术学习】greenplum和分布式/image-20230423004829848.png)
 
-还有一种分布式join， 适用于
+#### distrubite Join
 
-![image-20230423005151045](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423005151045.png)
+分布式join， 适用于
 
-### 关于索引
+![image-20230423005151045](assets/images/【技术学习】greenplum和分布式/image-20230423005151045.png)
 
-![image-20230423010330435](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423010330435.png)
+## 关于索引
+
+![image-20230423010330435](assets/images/【技术学习】greenplum和分布式/image-20230423010330435.png)
 
 是不是可以有反向索引？
 
-![image-20230423010542692](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423010542692.png)
+![image-20230423010542692](assets/images/【技术学习】greenplum和分布式/image-20230423010542692.png)
 
 
 
@@ -252,13 +262,13 @@ https://www.bilibili.com/video/BV127411G7PX?p=17&vd_source=1115a1b57e46edddf88be
 
 
 
-### 哪些SQL语法在分布式数据库上运行效率高：
+## 哪些SQL语法在分布式数据库上运行效率高：
 
-![image-20230423005448126](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423005448126.png)
+![image-20230423005448126](assets/images/【技术学习】greenplum和分布式/image-20230423005448126.png)
 
 
 
-![image-20230423005726617](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423005726617.png)
+![image-20230423005726617](assets/images/【技术学习】greenplum和分布式/image-20230423005726617.png)
 
 
 
@@ -268,13 +278,13 @@ https://www.bilibili.com/video/BV127411G7PX?p=17&vd_source=1115a1b57e46edddf88be
 
 zookeepr保证最终一致性，尽量保证强一致性
 
-![image-20230422235705893](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422235705893.png)
+![image-20230422235705893](assets/images/【技术学习】greenplum和分布式/image-20230422235705893.png)
 
 
 
 怎么选出leader？ 
 
-![image-20230422235959981](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422235959981.png)
+![image-20230422235959981](assets/images/【技术学习】greenplum和分布式/image-20230422235959981.png)
 
 
 
@@ -282,11 +292,11 @@ zookeepr保证最终一致性，尽量保证强一致性
 
 
 
-![image-20230423000748414](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423000748414.png)
+![image-20230423000748414](assets/images/【技术学习】greenplum和分布式/image-20230423000748414.png)
 
 ## zookeeper的脑裂问题
 
-大集群， 因为网络断掉了出现了两个小集群，出现了脑裂。![image-20230423001309062](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230423001309062.png)
+大集群， 因为网络断掉了出现了两个小集群，出现了脑裂。![image-20230423001309062](assets/images/【技术学习】greenplum和分布式/image-20230423001309062.png)
 
 出现脑裂问题非常严重。
 
@@ -316,7 +326,7 @@ https://www.youtube.com/watch?v=sRZOvIEX4xo
 
 ### Join
 
-![image-20230422233835845](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422233835845.png)
+![image-20230422233835845](assets/images/【技术学习】greenplum和分布式/image-20230422233835845.png)
 
 #### nestloop
 
@@ -334,7 +344,7 @@ https://www.cybertec-postgresql.com/en/join-strategies-and-performance-in-postgr
 
 可见：当表都不小，并且较小的表的hash表正好能装在work_mem中， 这样才能发挥作用，否则，hash桶就要放在磁盘了。
 
-![image-20230422233256742](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422233256742.png)
+![image-20230422233256742](assets/images/【技术学习】greenplum和分布式/image-20230422233256742.png)
 
 
 
@@ -344,7 +354,7 @@ https://www.cybertec-postgresql.com/en/join-strategies-and-performance-in-postgr
 
 如果有索引， mergejoin会非常快
 
-![image-20230422234020025](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422234020025.png)
+![image-20230422234020025](assets/images/【技术学习】greenplum和分布式/image-20230422234020025.png)
 
 
 
@@ -354,5 +364,5 @@ https://www.cybertec-postgresql.com/en/join-strategies-and-performance-in-postgr
 
 
 
-![image-20230422114825244](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20230422114825244.png)
+![image-20230422114825244](assets/images/【技术学习】greenplum和分布式/image-20230422114825244.png)
 
