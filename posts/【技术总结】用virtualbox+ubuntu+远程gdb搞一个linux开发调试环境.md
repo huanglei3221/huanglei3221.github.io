@@ -2,7 +2,7 @@
 
 
 
-然后下载ubuntu版本镜像，创建一个新的虚拟机：
+然后下载ubuntu版本镜像，创建一个新的虚拟机(建议使用lubuntu 而不是 ubuntu， 这样更轻量化)：
 
 ![image-20230410102928470](assets/images/【技术总结】用virtualbox+ubuntu+远程gdb搞一个linux开发调试环境/image-20230410102928470.png)
 
