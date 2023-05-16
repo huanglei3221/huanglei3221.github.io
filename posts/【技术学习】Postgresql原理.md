@@ -20,11 +20,7 @@ Postgresql原理学习建议看彭志勇的书以及Postgresql的官方文档：
 
 https://www.bilibili.com/video/BV127411G7PX?p=6&vd_source=1115a1b57e46edddf88be0738ef3f5b2
 
-
-
-
-
-
+德哥讲的非常好，本文只是对他讲述的一些摘要和补充
 
 
 

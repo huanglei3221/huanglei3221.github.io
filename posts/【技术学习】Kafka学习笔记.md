@@ -90,7 +90,7 @@ kafka2.8之后， 可以不用zookeeper ， zookeeper 已经成为kafka瓶颈
 
 
 
-### 5） 整体功能分三块：
+### 5） 整体功能三大块：
 
 三块： producer （java）consumer （java）broker （scala）
 
@@ -102,11 +102,15 @@ kafka2.8之后， 可以不用zookeeper ， zookeeper 已经成为kafka瓶颈
 
 ![Image](assets/images/Kafka学习笔记/Image-168380758105717-168380923767325.png)
 
-拦截器可用可不用（一般不用）， 序列化器进行序列化，如果是文本基本也用不到。分区器中有个部分叫 RecordAccumulator ， 它是一个缓存（32M）每个批次是16k 这是一个双端队列。 这里也用到了内存池。 数据被缓存到这里面， 按批次进行缓存。发送线程看到数据积累到batchsize之后， 才会发送数据。或者达到linger_ms也会发送
+其中： 拦截器可用可不用（一般不用）， 序列化器进行序列化（如果是文本基本也用不到）。分区器中有个部分叫 RecordAccumulator ， 它是一个缓存（32M）每个批次是16k 这是一个双端队列。 这里也用到了内存池。 数据被缓存到这里面， 按批次进行缓存。**发送线程看到数据积累到batchsize之后， 才会发送数据。或者达到linger_ms也会发送**
+
+发送的时候， 一个分区的数据以broker为key， 放到一个队列中，如图：
+
+![Image](assets/images/Kafka学习笔记/Image-168380920673019-168380921492923.png)
 
 
 
-**GPT TIPS：**
+##### **TIPS：Sender 和 RecordAcumulator关系**
 
 *在 Kafka 中，Sender 是负责将消息发送到 Kafka 集群的组件之一，而 RecordAccumulator 则是 Sender 内部的一个重要组件。*
 *Sender 的主要作用是将消息从生产者发送到 Kafka 集群的 Broker。当生产者发送消息时，Sender 负责将消息添加到 RecordAccumulator 中进行缓冲和批量发送。*
@@ -121,12 +125,6 @@ kafka2.8之后， 可以不用zookeeper ， zookeeper 已经成为kafka瓶颈
 
 *通过使用 RecordAccumulator，Kafka 实现了高效的消息缓冲和批量发送机制。这样可以提高消息发送的吞吐量和效率，减少网络开销，并且允许更大的批量处理。*
 *需要注意的是，RecordAccumulator 的配置参数可以根据具体的需求进行调整，以平衡延迟和吞吐量之间的权衡。*
-
-
-
-发送的时候， 一个分区的数据以broker为key， 放到一个队列中，如图：
-
-![Image](assets/images/Kafka学习笔记/Image-168380920673019-168380921492923.png)
 
 
 
@@ -198,7 +196,7 @@ kafka集群收到之后有一个应答机制， 级别为0,1，-1
 
 
 
-#### 提高吞吐量的方法
+### 提高吞吐量的方法
 
 1） 增加batch.size  批次大小， 默认16k
 
@@ -210,7 +208,7 @@ kafka集群收到之后有一个应答机制， 级别为0,1，-1
 
 
 
-#### 数据可靠性
+### 数据可靠性问题
 
 ##### 1） ACK=0， 很少使用
 
@@ -242,9 +240,11 @@ Kafka  引入了ISR机制进行保护。
 
 
 
-#### 数据重复问题
+### 数据重复问题
 
-##### 幂等性原理
+通过幂等性原理和事务来保证。
+
+#### 1）幂等性原理
 
 ![image-20230512100912955](assets/images/Kafka学习笔记/image-20230512100912955.png)
 
@@ -252,7 +252,9 @@ Kafka  引入了ISR机制进行保护。
 
 
 
-##### 事务
+#### 2）事务
+
+要使用事务功能，必须要开启幂等性
 
 ![image-20230512101031110](assets/images/Kafka学习笔记/image-20230512101031110.png)
 
@@ -260,7 +262,41 @@ Kafka  引入了ISR机制进行保护。
 
 
 
-##### 数据有序
+### 数据有序问题
+
+数据有序的条件：
+
+![image-20230512145516138](assets/images/【技术学习】Kafka学习笔记/image-20230512145516138.png)
+
+服务端重新排序：缓存请求个数小于5个，排序才有用。 会等到顺序请求都来了之后，才落盘。
+
+下图中： req1 和 req2 先落盘， 然后等到3来了之后， 345 才会落盘
+
+
+
+![image-20230512145554120](assets/images/【技术学习】Kafka学习笔记/image-20230512145554120.png)
+
+
+
+
+
+## Kafka Broker 
+
+### zookeeper中记录的数据
+
+![image-20230512150131229](assets/images/【技术学习】Kafka学习笔记/image-20230512150131229.png)
+
+可以看到zookeeper中存储的数据目录比较多。比较重要的就是：
+
+1） ids ： 记录有哪些服务器
+
+2） topics：  记录哪些服务器能用
+
+3） controller ： 记录controller
+
+其中， controller中的数据是用来做controller leader选举的， topics中的数据是用来决定某个partition leader选举的
+
+![image-20230512145857486](assets/images/【技术学习】Kafka学习笔记/image-20230512145857486.png)
 
 
 
@@ -268,11 +304,134 @@ Kafka  引入了ISR机制进行保护。
 
 
 
+### Kafka Broker整体工作流程
+
+![image-20230512151525176](assets/images/【技术学习】Kafka学习笔记/image-20230512151525176.png)
+
+1） Broker启动之后， 会向zookeeper注册。
+
+2） Controller谁先注册，谁说了算（先到先成为主controller）， broker0成为主controller
+
+3） 选举出来的Controller监听Brokers节点变化
+
+4） Controller决定Leader选举（图中的TopicA-partition0的 Leader选举）
+
+5） 其他Controller同步相关信息。
+
+6） 其他Controller从ZK同步相关信息
+
+Broker1的Partition0接收数据，写文件
+
+其他Broker从 Broker1的partition0同步数据， 是以LOG的形式进行同步的。
+
+7） 假设Broker1中的leader挂了， 相应的zookeeper节点会发生变化（比如从ids中消失）
+
+![image-20230512150610782](assets/images/【技术学习】Kafka学习笔记/image-20230512150610782.png)
+
+8） Controller监听到了节点的变化
+
+9） 于是从ISR中获取当前的leader和 follower信息，发现当前挂掉的broker1是leader，需要进行leader选举
+
+10） 选举新的leader，在isr中存活为前提， AR中排在前面的优先
+
+11）更新leader以及ISR
 
 
 
+#### TIPS： Kafka的Controller会监听哪些变化？
+
+Kafka 的 Controller 是 Kafka 集群中的一个特殊节点，负责管理分区的分配、副本的分配和 Leader 的选举等关键任务。Controller 会监听 ZooKeeper 上的一些特定路径来检测集群状态的变化和执行相应的操作。
+
+Controller 监听以下 ZooKeeper 路径上的变化：
+
+1. `/controller`: Controller 会创建一个临时节点 `/controller`，并监听该节点上的变化。当当前的 Controller 节点发生故障或主动放弃控制权时，该节点会被删除，触发新的 Controller 选举。
+2. `/brokers/ids`: Controller 会监听 `/brokers/ids` 路径上的子节点的变化，用于检测 Broker 的上线和下线。当新的 Broker 上线或下线时，Controller 会更新集群的元数据信息。
+3. `/brokers/topics`: Controller 会监听 `/brokers/topics` 路径上的子节点的变化，用于检测主题的创建、删除和分区的变化。当有新的主题被创建或删除，或者现有主题的分区发生变化时，Controller 会相应地进行分区的分配和副本的分配。
+4. `/admin/delete_topics`: 当管理员触发删除主题的操作时，Controller 会监听 `/admin/delete_topics` 路径上的变化。当删除主题的请求被创建时，Controller 会执行相应的主题删除操作。
+
+通过监听这些 ZooKeeper 路径上的变化，Controller 可以及时感知到集群状态的变化，根据需要执行分区分配、副本分配、Leader 选举等操作，以保持 Kafka 集群的稳定和可靠运行。
 
 
+
+### 节点的服役和退役
+
+![image-20230512154827585](assets/images/【技术学习】Kafka学习笔记/image-20230512154827585.png)
+
+这个没什么好说的，看演示效果
+
+
+
+### Kafka的副本
+
+![image-20230512154954857](assets/images/【技术学习】Kafka学习笔记/image-20230512154954857.png)
+
+
+
+### Follower的故障处理
+
+<img src="assets/images/【技术学习】Kafka学习笔记/image-20230512160026892.png" alt="image-20230512160026892" style="zoom: 67%;" />
+
+
+
+### Leader故障处理
+
+leader故障之后， 会选出新的leader。 
+
+但是新的leader可能会把其他follower已有的数据截断
+
+能保证一致性，但是不能保证数据丢失
+
+![image-20230512175735985](assets/images/【技术学习】Kafka学习笔记/image-20230512175735985.png)
+
+
+
+### 分区副本的分配
+
+对于分区大于服务器数量的情况如何分配？ 
+
+可以看到初始化的时候， leader和 follower的分配是错开的。尽量保证负载均衡
+
+并且是按照一轮一轮的分配
+
+![image-20230512180125061](assets/images/【技术学习】Kafka学习笔记/image-20230512180125061.png)
+
+
+
+### partition再平衡
+
+![image-20230512180327877](assets/images/【技术学习】Kafka学习笔记/image-20230512180327877.png)
+
+一段时间之后会检查是否平衡， 超过阈值不平衡会再平衡
+
+一般不建议开启再平衡， 会浪费带宽，性能开销大
+
+
+
+### 增加副本因子
+
+通过命令行可以增加副本
+
+
+
+### Kafka文件存储
+
+![image-20230512180743846](assets/images/【技术学习】Kafka学习笔记/image-20230512180743846.png)
+
+Kafka文件存储的方式， 三个文件
+
+1） .log日志文件
+
+![image-20230512181044308](assets/images/【技术学习】Kafka学习笔记/image-20230512181044308.png)
+
+2） .index偏移量索引
+
+3） .timeindex時間戳索引
+
+![image-20230512181353819](assets/images/【技术学习】Kafka学习笔记/image-20230512181353819.png)
+
+
+
+### 数据清理
 
 
 
