@@ -100,6 +100,8 @@ TODO： 什么是vacuum？？？
 
 ### 数据文件
 
+一个FileNode目录对应一个表或者index， datafile中又有Block
+
 ![image-20230426160047995](assets/images/【技术学习】Postgresql原理/image-20230426160047995.png)
 
 
@@ -459,6 +461,36 @@ freelist里面又会记录每种大小的block分别分配了多少
 
 
 
+### Flex 和 Bison  （词法和语法解析）
+
+![image-20230601111557837](【技术学习】Postgresql原理.assets/image-20230601111557837.png)
+
+
+
+![image-20230601111946655](【技术学习】Postgresql原理.assets/image-20230601111946655.png)
+
+
+
+
+
+![image-20230601112026163](【技术学习】Postgresql原理.assets/image-20230601112026163.png)
+
+![image-20230601112115826](【技术学习】Postgresql原理.assets/image-20230601112115826.png)
+
+
+
+![image-20230601112303753](【技术学习】Postgresql原理.assets/image-20230601112303753.png)
+
+
+
+![image-20230601112404408](【技术学习】Postgresql原理.assets/image-20230601112404408.png)
+
+Graphviz 特别适合画图
+
+
+
+
+
 ### 代价因子：
 
 ![image-20230426170324975](assets/images/【技术学习】Postgresql原理/image-20230426170324975.png)
@@ -483,7 +515,7 @@ freelist里面又会记录每种大小的block分别分配了多少
 
 
 
-### Join
+### Join算子
 
 ![image-20230422233835845](assets/images/【技术学习】Postgresql原理/image-20230422233835845.png)
 
@@ -526,6 +558,48 @@ mergejoin 的例子：
 #### Semi Join 和 Anti Join
 
 ![image-20230427000529547](assets/images/【技术学习】Postgresql原理/image-20230427000529547.png)
+
+
+
+
+
+### 聚集算子
+
+![image-20230601105143905](【技术学习】Postgresql原理.assets/image-20230601105143905.png)
+
+
+
+分布式计算中的两阶段聚集： 从节点做部分聚集，之后再给到主节点做
+
+
+
+#### Group by 的两种实现方式
+
+##### 哈希聚集
+
+![image-20230601110521022](【技术学习】Postgresql原理.assets/image-20230601110521022.png)
+
+##### 分组聚集
+
+如果数据本身就有序， 通常会使用分组聚集。
+
+![image-20230601110601893](【技术学习】Postgresql原理.assets/image-20230601110601893.png)
+
+朴素聚集 是分组聚集的特殊情况。 
+
+
+
+#### MPP场景下的聚集
+
+Greenplum会对数据进行重分布
+
+![image-20230601111009718](【技术学习】Postgresql原理.assets/image-20230601111009718.png)
+
+
+
+
+
+
 
 
 
